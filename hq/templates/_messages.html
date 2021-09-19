@@ -7,3 +7,17 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+
+
+{% if error_message %}
+  <div class="alert alert-danger 1rem">
+    {{ error_message }}
+  </div>
+{% endif %}
+
+
+{% if success_message %}
+  <div class="alert alert-success 1rem">
+    {{ success_message }}
+  </div>
+{% endif %}
