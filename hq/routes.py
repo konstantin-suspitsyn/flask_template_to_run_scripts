@@ -2,6 +2,37 @@ from hq import app, mysql
 from flask import render_template, request, flash, url_for, redirect, session
 from hq.forms import RegisterForm
 from passlib.hash import sha256_crypt
+from functools import wraps
+
+
+def is_logged_in(f):
+    """
+    Проверяет, если пользователь залогинился
+    """
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Вы не авторизированы. Пожалуйста, войдите', 'danger')
+            return redirect(url_for('login_page'))
+
+    return wrap
+
+
+def is_not_logged_in(f):
+    """
+    Не позволяет залогиниться еще раз
+    """
+    @wraps(f)
+    def wrap_no(*args, **kwargs):
+        if 'logged_in' not in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Вы уже залогинены. Прекратите баловаться', 'danger')
+            return redirect(url_for('index'))
+
+    return wrap_no
 
 
 @app.route('/')
@@ -16,8 +47,8 @@ def about_page():
 
 
 @app.route('/register', methods=['POST', 'GET'])
+@is_not_logged_in
 def register():
-    # TODO: добавить проверку если пользователь уже вошел, не показывать ничего
     sql_user_check = """
     SELECT * FROM users
     WHERE 
@@ -56,9 +87,8 @@ def register():
 
 
 @app.route('/login', methods=['POST', 'GET'])
+@is_not_logged_in
 def login_page():
-    # TODO: добавить проверку если пользователь уже вошел, не показывать ничего
-
     error_message = "Логин не существует или пароль некорректный"
 
     if request.method == 'POST':
@@ -96,16 +126,11 @@ def login_page():
 
 
 @app.route('/logout')
+@is_logged_in
 def logout():
-    if session.get('logged_in'):
-        # Если пользователь залогинился
-        session.clear()
-        flash('До новых встреч!', 'success')
-        return redirect(url_for('index'))
-    else:
-        # Если пользователь не залогинился и просто тыкается по ссылкам
-        flash('Чтобы выйти, необходимо войти. Как вы вообще попали на эту ссылку?', 'danger')
-        return redirect(url_for('index'))
+    session.clear()
+    flash('До новых встреч!', 'success')
+    return redirect(url_for('index'))
 
 
 @app.route('/dashboard')
