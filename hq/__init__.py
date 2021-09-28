@@ -15,3 +15,4 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 from hq import routes
+from hq.data_change import data_change_routes

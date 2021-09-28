@@ -1,8 +1,10 @@
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
-from passlib.hash import sha256_crypt
+from wtforms import Form, StringField, PasswordField, validators
 
 
 class RegisterForm(Form):
+    """
+    Форма регистрации
+    """
     username = StringField('Имя пользователя', [validators.Length(min=6, max=50)])
     email = StringField('Email пользователя', [validators.Length(min=6, max=50)])
     password = PasswordField('Пароль', [

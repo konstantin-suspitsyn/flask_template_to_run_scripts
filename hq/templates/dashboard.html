@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}
-    Регистрация
+    Админ-панель
 {% endblock %}
 {% block content %}
 {% from '_formhelpers.html' import render_field %}
 <h1>Админ-панель</h1>
+<div>
+    <h2>
+        Доступные данные
+    </h2>
+    <a href="{{ url_for('db_change') }}">Изменение мастер-данных</a>
+</div>
 
 {% endblock %}

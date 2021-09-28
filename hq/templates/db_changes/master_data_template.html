@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+    Пример данных из записи
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<h1>Все записи</h1>
+<a href="{{ url_for('add_data_to_md') }}" class="btn btn-warning mt-2 mb-2">Добавить данные</a>
+<table class="table table-stripped">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Что-то
+        </th>
+        <th>
+            Свойство
+        </th>
+        <th>
+            Последний user
+        </th>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Дата изменения
+        </th>
+        <th>
+        </th>
+    </tr>
+    {% for data in all_data: %}
+        <tr>
+        <th>
+            {{ data.id }}
+        </th>
+        <th>
+            {{ data.some_data }}
+        </th>
+        <th>
+            {{ data.property }}
+        </th>
+        <th>
+            {{ data.username }}
+        </th>
+
+        <th>
+             {{ data.creation_datetime }}
+        </th>
+        <th>
+            {{ data.update_datetime }}
+        </th>
+        <th>
+        </th>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

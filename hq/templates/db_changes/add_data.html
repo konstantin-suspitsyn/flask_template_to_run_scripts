@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+    Добавление записи
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<h1>Добавление записи</h1>
+<form method="POST" action="">
+    <div class="form_group">
+        {{ render_field(form.some_data, class="form-control")}}
+    </div>
+    <div class="form_group">
+        {{ render_field(form.some_property, class="form-control")}}
+    </div>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Ok">
+</form>
+{% endblock %}
