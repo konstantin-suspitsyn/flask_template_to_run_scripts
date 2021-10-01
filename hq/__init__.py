@@ -1,18 +1,19 @@
 from flask import Flask
-from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = 'ddb3bac6ad73503d1ef4920a'
 
 # Config MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'orchestrator'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'root'
+MYSQL_DB = 'orchestrator_01'
 
-# init MySQL
-mysql = MySQL(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
+
+# init SQLAlchemy
+db = SQLAlchemy(app)
 
 from hq import routes
 from hq.data_change import data_change_routes
