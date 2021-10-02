@@ -16,13 +16,16 @@ To do:
 
 ## Steps to do
 <ol>
-    <li>Go to hq/\__init\__.py and change:
+    <li>Go to hq/__init__.py and change:
         <ul>
             <li>app.secret_key</li>
             <li>MYSQL_HOST</li>
             <li>MYSQL_USER</li>
             <li>MYSQL_PASSWOR</li>
-            <li>MYSQL_DB</li>
+            <li>MYSQL_DB (database should be allready created)</li>
         </ul>
+    </li>
+    <li>
+        Run script db_setup.py. It will create first admin user
     </li>
 </ol>

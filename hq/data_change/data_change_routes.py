@@ -11,7 +11,6 @@
 #     """
 #     Список доступных форм для изменения
 #     На данный момент просто хардкод в html
-#     TODO переделать на автомат
 #     """
 #     return render_template(r'db_changes/data_change.html')
 #

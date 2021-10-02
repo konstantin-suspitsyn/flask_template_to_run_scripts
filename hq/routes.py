@@ -1,14 +1,28 @@
-# from hq import app, mysql
+from hq import app, db
+from flask import render_template, flash, request, session, redirect, url_for
+from hq.helpers import check_role, is_not_logged_in
+
+
 # from flask import render_template, request, flash, url_for, redirect, session
 # from hq.forms import RegisterForm
 # from passlib.hash import sha256_crypt
-# from hq.helpers import is_not_logged_in, is_logged_in
-#
-#
-# @app.route('/')
-# @app.route('/home')
-# def index():
-#     return render_template('home.html')
+
+@app.route('/')
+@app.route('/home')
+def index():
+    if 'logged_in' in session:
+        return render_template('home.html')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/about')
+@check_role(['base'])
+def about():
+    return render_template('about.html')
+
+
+
 #
 #
 # @app.route('/about')
@@ -94,13 +108,6 @@
 #
 #     return render_template('login.html')
 #
-#
-# @app.route('/logout')
-# @is_logged_in
-# def logout():
-#     session.clear()
-#     flash('До новых встреч!', 'success')
-#     return redirect(url_for('index'))
 #
 #
 # @app.route('/dashboard')

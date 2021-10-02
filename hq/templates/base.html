@@ -22,19 +22,23 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          {% if session.logged_in %}
+          <li><a href="#" class="nav-link px-2 text-white text-decoration-underline">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white text-decoration-underline">Запуск скриптов</a></li>
+          <li><a href="#" class="nav-link px-2 text-white text-decoration-underline">Изменение данных в БД</a></li>
+            {% if 'administrator' in session.role %}
+              <li><a href="#" class="nav-link px-2 text-white text-white text-decoration-underline">Администрирование</a></li>
+            {% endif %}
+          {% endif %}
+          <li><a href="/about" class="nav-link px-2 text-white text-decoration-underline">Что здесь происходит?</a></li>
         </ul>
 
         <div class="text-end">
           {% if session.logged_in %}
             <a href="{{ url_for('logout') }}" class="btn btn-outline-light me-2">Выйти</a>
           {% else %}
-            <a href="{{ url_for('login_page') }}" class="btn btn-outline-light me-2">Логин</a>
-            <a href="{{ url_for('register') }}" class="btn btn-warning">Регистрация</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-light me-2">Логин</a>
+            <a href="#" class="btn btn-warning">Регистрация</a>
           {% endif %}
         </div>
       </div>

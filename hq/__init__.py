@@ -11,9 +11,10 @@ MYSQL_PASSWORD = 'root'
 MYSQL_DB = 'orchestrator_01'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # init SQLAlchemy
 db = SQLAlchemy(app)
 
 from hq import routes
-from hq.data_change import data_change_routes
+from hq.user_management import routes_user_management
