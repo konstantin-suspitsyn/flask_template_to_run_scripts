@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+    Изменение персональных данных — {{ session.username }}
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<h1 class="mb-3">Изменение персональных данных — {{ session.username }}</h1>
+<h3>Персональные данные</h3>
+<form method="POST" action="" name="data_change">
+    <div class="mb-3">
+        {{render_field(data_change.email, class="form-control", id="emailInput")}}
+    </div>
+    <div>
+        {{render_field(data_change.first_name, class="form-control", id="usernameFistName")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(data_change.last_name, class="form-control", id="usernameLastName")}}
+    </div>
+    <div class="mb-3 no-label">
+        {{render_field(data_change.submit, class="btn btn-primary", id="usernameDataSubmit")}}
+    </div>
+</form>
+<p><a href="{{ url_for('change_password') }}">Изменить пароль</a></p>
+{% endblock %}
