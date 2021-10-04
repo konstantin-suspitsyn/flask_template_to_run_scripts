@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<form method="POST" action="">
+
+
+        {{render_field(role_form.role, class="form-control", id="roleInput")}}
+
+    <button type="submit" class="btn btn-primary">Изменить</button>
+</form>
+
+{% endblock %}

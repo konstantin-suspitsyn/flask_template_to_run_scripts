@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Название роли
+            </th>
+            <th scope="col">
+            </th>
+            <th scope="col">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <form method="POST" action="">
+            <th scope="col" class="no-label">
+
+                    {{render_field(role_form.role, class="form-control", id="roleInput")}}
+            </th>
+            <th scope="col">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </th>
+            <th scope="col">
+            </th>
+            </form>
+        </tr>
+        {% for r in roles_list %}
+            <tr>
+            <th scope="col">
+               {{ r.name }}
+            </th>
+            <th scope="col">
+                <a href="{{ url_for('role_edit', id_no=r.id) }}" class="btn btn-warning">Изменить</a>
+            </th>
+            <th scope="col">
+                <a href="{{ url_for('role_delete', id_no=r.id) }}" class="btn btn-danger">Удалить</a>
+            </th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

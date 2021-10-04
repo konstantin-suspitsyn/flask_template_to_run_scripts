@@ -1,9 +1,9 @@
 from hq import app, db
 from flask import render_template, flash, request, session, redirect, url_for
 from hq.user_management.models_user_management import User, UserRoles, Role
-from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm
+from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm, RoleForm
 from passlib.hash import sha256_crypt
-from hq.helpers import is_not_logged_in, is_logged_in
+from hq.helpers import is_not_logged_in, is_logged_in, check_role
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -137,3 +137,70 @@ def change_password():
             flash('Текущий пароль неправильный', 'danger')
 
     return render_template('user_management/change_password.html', password_change=password_change)
+
+
+@app.route('/dashboard')
+@check_role('administrator')
+def dashboard():
+    return render_template('user_management/dashboard.html')
+
+
+@app.route('/dashboard/roles', methods=['POST', 'GET'])
+@check_role('administrator')
+def roles():
+    roles_list = Role.query.all()
+    role_form = RoleForm(request.form)
+
+    if request.method == 'POST' and role_form.validate():
+
+        new_role_name = role_form.role.data
+
+        check_existing_role = Role.query.filter_by(name=new_role_name).first()
+        if check_existing_role is None:
+            # Check if role is new
+            new_role = Role(name=new_role_name)
+            db.session.add(new_role)
+            db.session.commit()
+
+            flash('Роль создана', 'success')
+
+            return redirect(url_for('roles'))
+
+        else:
+            flash('Такая роль уже есть', 'danger')
+
+    return render_template('user_management/roles_list.html', role_form=role_form, roles_list=roles_list)
+
+
+@app.route('/dashboard/roles/change/<string:id_no>', methods=['POST', 'GET'])
+@check_role('administrator')
+def role_edit(id_no):
+    role_form = RoleForm(request.form)
+    current_role = Role.query.filter_by(id=id_no).first()
+
+    if request.method == 'POST' and role_form.validate():
+
+        if Role.query.filter_by(name=role_form.role.data).first() is None:
+            current_role.name = role_form.role.data
+            db.session.commit()
+
+            flash('Название изменено', 'success')
+
+            return redirect(url_for('roles'))
+
+        else:
+            # Duplicate name was found
+            flash('Такая роль уже существует', 'danger')
+
+    role_form.role.data = current_role.name
+
+    return render_template('user_management/update_role.html', role_form=role_form)
+
+
+@app.route('/dashboard/roles/delete/<string:id_no>', methods=['POST', 'GET'])
+@check_role('administrator')
+def role_delete(id_no):
+    current_role = Role.query.filter_by(id=id_no).first()
+    db.session.delete(current_role)
+    db.session.commit()
+    return redirect(url_for('roles'))

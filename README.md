@@ -9,9 +9,12 @@ Html pages are based on bootstrap v5.1.1
 Based on MySQL
 
 To do:
-1. User role-based auth
+1. Admin page to administrate users
 2. Change data in database via uploading xlsx files
 3. Run scripts with progress-bar shown to user
+
+Done:
+1. User role-based auth
 
 
 ## Steps to do

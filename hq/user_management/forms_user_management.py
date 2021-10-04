@@ -44,3 +44,9 @@ class UserDataChangeForm(Form):
     # PasswordChangeForm and UserDataChangeForm will be on the same page
     # Submit button will allow to catch what form was submitted
     submit = SubmitField('Изменить данные пользователя')
+
+class RoleForm(Form):
+    """
+    Role form
+    """
+    role = StringField('Роль', [validators.Length(min=1, max=50)])
