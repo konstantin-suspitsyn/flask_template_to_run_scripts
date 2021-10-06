@@ -140,13 +140,13 @@ def change_password():
 
 
 @app.route('/dashboard')
-@check_role('administrator')
+@check_role(['administrator'])
 def dashboard():
     return render_template('user_management/dashboard.html')
 
 
 @app.route('/dashboard/roles', methods=['POST', 'GET'])
-@check_role('administrator')
+@check_role(['administrator'])
 def roles():
     roles_list = Role.query.all()
     role_form = RoleForm(request.form)
@@ -173,8 +173,12 @@ def roles():
 
 
 @app.route('/dashboard/roles/change/<string:id_no>', methods=['POST', 'GET'])
-@check_role('administrator')
+@check_role(['administrator'])
 def role_edit(id_no):
+    """
+    Edit role
+    :param id_no: Role id
+    """
     role_form = RoleForm(request.form)
     current_role = Role.query.filter_by(id=id_no).first()
 
@@ -198,9 +202,59 @@ def role_edit(id_no):
 
 
 @app.route('/dashboard/roles/delete/<string:id_no>', methods=['POST', 'GET'])
-@check_role('administrator')
+@check_role(['administrator'])
 def role_delete(id_no):
+    """
+    Delete a role
+    :param id_no: Role id
+    """
     current_role = Role.query.filter_by(id=id_no).first()
     db.session.delete(current_role)
     db.session.commit()
     return redirect(url_for('roles'))
+
+
+@app.route('/dashboard/users', methods=['GET', 'POST'])
+@check_role(['administrator'])
+def list_users():
+    # List all users with pagination and search
+    if request.method == 'POST':
+        # Getting data from form
+        # Crazy select with multiple tables
+        user_name = request.form['username']
+        # .first() returns tuple, so I need to convert it to list of tuples
+        user_list = [db.session.query(User).select_from(User)\
+                         .join(UserRoles, UserRoles.user_id == User.id)\
+                         .join(Role, Role.id == UserRoles.role_id)\
+                         .add_columns(User.id, User.username, User.email, User.first_name, User.last_name, User.active,
+                                      Role.name)\
+                         .filter(User.username == user_name)\
+                         .filter(User.username != session['username']).first()]
+
+        if user_list is None:
+            flash('Пользователь с таким именем не найден', 'danger')
+
+    if request.method == 'GET':
+        # Crazy select with multiple tables
+        # Do not allow change self user from this form
+        user_list = db.session.query(User).select_from(User) \
+            .join(UserRoles, UserRoles.user_id == User.id) \
+            .join(Role, Role.id == UserRoles.role_id) \
+            .add_columns(User.id, User.username, User.email, User.first_name, User.last_name, User.active, Role.name) \
+            .filter(User.username != session['username']).all()
+
+    return render_template('user_management/user_list.html', user_list=user_list)
+
+
+@app.route('/dashboard/users/delete/<string:id_no>', methods=['GET', 'POST'])
+@check_role(['administrator'])
+def user_delete(id_no):
+    """
+    Delete an user
+    :param id_no: Role id
+    """
+    current_role = User.query.filter_by(id=id_no).first()
+    # Row from table user_roles will be deleted automatically
+    db.session.delete(current_role)
+    db.session.commit()
+    return redirect(url_for('list_users'))

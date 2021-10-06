@@ -25,10 +25,11 @@ Done:
             <li>MYSQL_HOST</li>
             <li>MYSQL_USER</li>
             <li>MYSQL_PASSWOR</li>
-            <li>MYSQL_DB (database should be allready created)</li>
+            <li>MYSQL_DB (database should be already created)</li>
         </ul>
     </li>
     <li>
         Run script db_setup.py. It will create first admin user
     </li>
 </ol>
+To change items per page in pagination change PAGINATION_ITEMS parameter in hq/__init__.py

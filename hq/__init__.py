@@ -13,6 +13,9 @@ MYSQL_DB = 'orchestrator_01'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Items per page for pagination
+app.config['PAGINATION_ITEMS'] = 5
+
 # init SQLAlchemy
 db = SQLAlchemy(app)
 

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+{% from '_formhelpers.html' import render_field %}
+<form action="" method="POST">
+    <div class="mb-3">
+        <p>Поиск по имени пользователя</p>
+        <input type="text" name="username" class="form-control", id="usernameInput" value="{{request.form.username}}">
+    </div>
+  <div>
+        <button type="submit" class="btn btn-primary mb-3">Найти</button>
+  </div>
+    <div>
+        <a href="{{ url_for('list_users') }}" class="btn btn-primary mb-3">Очистить поиск</a>
+    </div>
+</form>
+<table class="table table-dark table-striped mb-3">
+    <thead>
+        <tr>
+            <th>
+                Имя пользователя
+            </th>
+            <th>
+                Электронная почта
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Вкл?
+            </th>
+            <th>
+                Роль
+            </th>
+            <th>
+                Изменить
+            </th>
+            <th>
+                Удалить
+            </th>
+            <th>
+                Изменить пароль
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if user_list %}
+            {% for c_user in user_list %}
+                <tr>
+                    <th>
+                        {{ c_user.username }}
+                    </th>
+                    <th>
+                        {{ c_user.email }}
+                    </th>
+                    <th>
+                        {{ c_user.first_name }}
+                    </th>
+                    <th>
+                        {{ c_user.last_name }}
+                    </th>
+                    <th>
+                        {{ c_user.active }}
+                    </th>
+                    <th>
+                        {{ c_user.name }}
+                    </th>
+                    <th>
+                        Изменить
+                    </th>
+                    <th>
+                        <a href="{{ url_for('user_delete', id_no=c_user.id) }}" class="btn btn-danger">X</a>
+                    </th>
+                    <th>
+                        Изменить пароль
+                    </th>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
