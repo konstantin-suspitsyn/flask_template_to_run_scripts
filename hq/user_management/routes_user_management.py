@@ -1,7 +1,8 @@
 from hq import app, db
 from flask import render_template, flash, request, session, redirect, url_for
 from hq.user_management.models_user_management import User, UserRoles, Role
-from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm, RoleForm
+from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm, RoleForm,\
+    PasswordResetForm
 from passlib.hash import sha256_crypt
 from hq.helpers import is_not_logged_in, is_logged_in, check_role
 
@@ -258,3 +259,22 @@ def user_delete(id_no):
     db.session.delete(current_role)
     db.session.commit()
     return redirect(url_for('list_users'))
+
+
+@app.route('/dashboard/users/password_reset/<string:id_no>', methods=['GET', 'POST'])
+@check_role(['administrator'])
+def password_reset(id_no):
+    """
+
+    :param id_no:
+    """
+    pass_form = PasswordResetForm(request.form)
+    current_user = User.query.filter_by(id=id_no).first()
+
+    if request.method == 'POST' and pass_form.validate():
+        current_user.password = sha256_crypt.hash(pass_form.password.data)
+        db.session.commit()
+
+        flash('Пароль успешно изменен', 'success')
+
+    return render_template('user_management/password_reset.html', pass_form=pass_form, user=current_user)

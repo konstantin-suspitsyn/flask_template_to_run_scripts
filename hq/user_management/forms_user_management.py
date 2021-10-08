@@ -50,3 +50,14 @@ class RoleForm(Form):
     Role form
     """
     role = StringField('Роль', [validators.Length(min=1, max=50)])
+
+
+class PasswordResetForm(Form):
+    """
+    Reset Password form
+    """
+    password = PasswordField('Пароль', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Пароли не совпадают')
+    ])
+    confirm = PasswordField('Повторите пароль')
