@@ -45,6 +45,7 @@ class UserDataChangeForm(Form):
     # Submit button will allow to catch what form was submitted
     submit = SubmitField('Изменить данные пользователя')
 
+
 class RoleForm(Form):
     """
     Role form

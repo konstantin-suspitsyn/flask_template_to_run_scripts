@@ -1,7 +1,7 @@
 from hq import app, db
 from flask import render_template, flash, request, session, redirect, url_for
 from hq.user_management.models_user_management import User, UserRoles, Role
-from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm, RoleForm,\
+from hq.user_management.forms_user_management import RegisterForm, UserDataChangeForm, PasswordChangeForm, RoleForm, \
     PasswordResetForm
 from passlib.hash import sha256_crypt
 from hq.helpers import is_not_logged_in, is_logged_in, check_role
@@ -86,10 +86,13 @@ def logout():
 
 @app.route('/personal_settings', methods=['POST', 'GET'])
 @is_logged_in
-def personal_settings():
-    data_change = UserDataChangeForm(request.form)
+def personal_settings(id_no=None):
+    if id_no is None:
+        user = User.query.filter_by(username=session['username']).first()
+    else:
+        user = User.query.filter_by(id=id_no).first()
 
-    user = User.query.filter_by(username=session['username']).first()
+    data_change = UserDataChangeForm(request.form)
 
     if request.method == 'GET':
         # If we only view info
@@ -114,7 +117,7 @@ def personal_settings():
             # Email duplicate was found
             flash('Пользователь с такой электронной почтой существует', 'danger')
 
-    return render_template('user_management/personal_settings.html', data_change=data_change)
+    return render_template('user_management/personal_settings.html', data_change=data_change, id_no=id_no)
 
 
 @app.route('/personal_settings/change_password', methods=['POST', 'GET'])
@@ -224,12 +227,12 @@ def list_users():
         # Crazy select with multiple tables
         user_name = request.form['username']
         # .first() returns tuple, so I need to convert it to list of tuples
-        user_list = [db.session.query(User).select_from(User)\
-                         .join(UserRoles, UserRoles.user_id == User.id)\
-                         .join(Role, Role.id == UserRoles.role_id)\
+        user_list = [db.session.query(User).select_from(User) \
+                         .join(UserRoles, UserRoles.user_id == User.id) \
+                         .join(Role, Role.id == UserRoles.role_id) \
                          .add_columns(User.id, User.username, User.email, User.first_name, User.last_name, User.active,
-                                      Role.name)\
-                         .filter(User.username == user_name)\
+                                      Role.name) \
+                         .filter(User.username == user_name) \
                          .filter(User.username != session['username']).first()]
 
         if user_list is None:
@@ -278,3 +281,14 @@ def password_reset(id_no):
         flash('Пароль успешно изменен', 'success')
 
     return render_template('user_management/password_reset.html', pass_form=pass_form, user=current_user)
+
+
+@app.route('/dashboard/users/change_user_data/<string:id_no>', methods=['GET', 'POST'])
+@check_role(['administrator'])
+def change_user_data(id_no):
+    """
+
+    :param id_no:
+    :return:
+    """
+    return personal_settings(id_no)

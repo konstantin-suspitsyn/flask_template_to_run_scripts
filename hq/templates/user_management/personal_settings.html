@@ -20,5 +20,11 @@
         {{render_field(data_change.submit, class="btn btn-primary", id="usernameDataSubmit")}}
     </div>
 </form>
-<p><a href="{{ url_for('change_password') }}">Изменить пароль</a></p>
+<p>
+    {% if id_no is none %}
+        <a href="{{ url_for('change_password') }}">Изменить пароль</a>
+    {% else %}
+        <a href="{{ url_for('password_reset', id_no=id_no) }}" class="btn btn-danger">Сбросить пароль пользователя</a>
+    {% endif %}
+</p>
 {% endblock %}

@@ -71,13 +71,13 @@
                         {{ c_user.name }}
                     </th>
                     <th>
-                        Изменить
+                        <a href="{{ url_for('change_user_data', id_no=c_user.id) }}" class="btn btn-danger">Изменить</a>
                     </th>
                     <th>
                         <a href="{{ url_for('user_delete', id_no=c_user.id) }}" class="btn btn-danger">X</a>
                     </th>
                     <th>
-                        Изменить пароль
+                        <a href="{{ url_for('password_reset', id_no=c_user.id) }}" class="btn btn-danger">Сбросить пароль</a>
                     </th>
                 </tr>
             {% endfor %}
