@@ -33,3 +33,7 @@ Done:
     </li>
 </ol>
 To change items per page in pagination change PAGINATION_ITEMS parameter in hq/__init__.py
+
+## Important
+Temporary files stored in hq/static/tmp_files/**<br>
+You need to create cron task to clear this folder on your server

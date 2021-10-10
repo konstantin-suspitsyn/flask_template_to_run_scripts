@@ -16,8 +16,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Items per page for pagination
 app.config['PAGINATION_ITEMS'] = 5
 
+# Items per page for pagination
+app.config['ALLOWED_EXTENSIONS'] = ('xlsx',)
+app.config['UPLOAD_FOLDER'] = r'hq\static\tmp_files'
+
 # init SQLAlchemy
 db = SQLAlchemy(app)
 
 from hq import routes
 from hq.user_management import routes_user_management
+from hq.run_functions import routes_run_function

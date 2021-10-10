@@ -1,5 +1,6 @@
 from flask import flash, url_for, redirect, session
 from functools import wraps
+from hq import app
 
 
 def is_logged_in(f):
@@ -53,3 +54,17 @@ def check_role(roles: list):
         return decorator
 
     return wrapper
+
+
+def check_filetype(filename: str) -> bool:
+    """
+    Checks if filename in list of allowed files
+    :param filename: name of a file
+    :return: True if filename in list
+    """
+    answer = False
+
+    if filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS'] :
+        answer = True
+
+    return answer

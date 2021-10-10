@@ -27,7 +27,7 @@
           {% if session.logged_in %}
           <li><a href="{{ url_for('index') }}" class="nav-link px-2 text-white text-decoration-underline">Home</a></li>
           <li><a href="#" class="nav-link px-2 text-white text-decoration-underline">Запуск скриптов</a></li>
-          <li><a href="#" class="nav-link px-2 text-white text-decoration-underline">Изменение данных в БД</a></li>
+          <li><a href="{{ url_for('data_menu') }}" class="nav-link px-2 text-white text-decoration-underline">Изменение данных в БД</a></li>
             {% if 'administrator' in session.role %}
               <li><a href="{{ url_for('dashboard') }}" class="nav-link px-2 text-white text-white text-decoration-underline">Администрирование</a></li>
             {% endif %}
