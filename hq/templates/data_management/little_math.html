@@ -1,20 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}
-    Dashboard
+Запуск простого скрипта
 {% endblock %}
 {% block content %}
 {% from '_formhelpers.html' import render_field %}
-<p><a href="{{ url_for('static', filename='help_data/bond_data.xlsx') }}">Скачать Excel-шаблон с тестовыми данными</a><br>
-Список фильмов взят из <a href="https://en.wikipedia.org/wiki/List_of_James_Bond_films">Wikipedia</a></p>
-<p>
-    Загрузить данные из Excel в базу данных
-</p>
-<form method="POST" action="" enctype="multipart/form-data">
-  <div class="mb-3">
-    <input type="file"  name="excel_to_upload" class="form-control" id="excel_to_uploadInput" value="{{request.form.excel_to_upload}}">
-    <button type="submit" class="btn btn-primary">Загрузить</button>
-  </div>
-</form>
+<div class="easy_to_read">
+    <h1>Запуск простого скрипта</h1>
+    <p>В скрипте реализована простая логика</p>
+    <p>
+    <ol>
+        <li>
+            Скачайте <a href="{{ url_for('static', filename='help_data/bond_data.xlsx') }}">шаблон для загрузки</a>. Он
+            наполнен тестовыми данными
+        </li>
+        <li>
+            Если хотите, поменяйте значения. Нельзя менять названия столбцов и типы данных
+        </li>
+        <li>
+            Загрузите измененный (или неизмененный) шаблон в форму
+        </li>
+        <li>
+            Скрипт вычтет значения бюджета из выручки
+        </li>
+        <li>
+            Получите обратно корректный файл
+        </li>
+    </ol>
+    </p>
+    Форма загрузки:
+    </p>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div class="mb-3 input-group">
+            <input type="file" name="excel_to_upload" class="form-control" id="excel_to_uploadInput"
+                   aria-label="Загрузить Excel" value="{{request.form.excel_to_upload}}">
 
-<p><a href="{{ url_for('list_users')}}">Список пользователей</a></p>
+            <button type="submit" class="btn btn-outline-secondary">Загрузить</button>
+        </div>
+    </form>
+    <p>
+        Список фильмов взят из <a href="https://en.wikipedia.org/wiki/List_of_James_Bond_films">Wikipedia</a></p>
+    <p>
+</div>
 {% endblock %}

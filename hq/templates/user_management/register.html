@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 {% block title %}
-    Регистрация
+Регистрация
 {% endblock %}
 {% block content %}
 {% from '_formhelpers.html' import render_field %}
 <h1>Регистрация</h1>
 <form method="POST" action="">
-  <div class="mb-3">
-    {{render_field(form.username, class="form-control", id="usernameInput")}}
-  </div>
-  <div class="mb-3">
-    {{render_field(form.email, class="form-control", id="emailInput")}}
-  </div>
-  <div class="mb-3">
-    {{render_field(form.password, class="form-control", id="passwordInput")}}
-  </div>
-  <div class="mb-3">
-    {{render_field(form.confirm, class="form-control", id="passwordCheckInput")}}
-  </div>
-  <div class="mb-3">
-    {{render_field(form.first_name, class="form-control", id="usernameFistName")}}
-  </div>
-  <div class="mb-3">
-    {{render_field(form.last_name, class="form-control", id="usernameLastName")}}
-  </div>
-  <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    <div class="mb-3">
+        {{render_field(form.username, class="form-control", id="usernameInput")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(form.email, class="form-control", id="emailInput")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(form.password, class="form-control", id="passwordInput")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(form.confirm, class="form-control", id="passwordCheckInput")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(form.first_name, class="form-control", id="usernameFistName")}}
+    </div>
+    <div class="mb-3">
+        {{render_field(form.last_name, class="form-control", id="usernameLastName")}}
+    </div>
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 </form>
 {% endblock %}

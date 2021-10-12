@@ -1,7 +1,7 @@
 from hq import app, db
 import pandas as pd
 from hq.helpers import check_role, check_filetype
-from flask import render_template, request, flash, redirect, url_for, send_file, after_this_request
+from flask import render_template, request, flash, redirect, url_for, send_file
 from sqlalchemy import create_engine
 from werkzeug.utils import secure_filename
 import os
@@ -11,12 +11,18 @@ import datetime as dt
 @app.route('/data', methods=['POST', 'GET'])
 @check_role(['administrator'])
 def data_menu():
+    """
+    Menu for data-change
+    """
     return render_template('data_management/data_menu.html')
 
 
 @app.route('/data/add_data_from_excel', methods=['POST', 'GET'])
 @check_role(['administrator'])
 def add_data_from_excel():
+    """
+    Upload data from excel to database
+    """
     data = None
 
     sql_text = """
@@ -58,9 +64,8 @@ def add_data_from_excel():
 @check_role(['administrator'])
 def get_data_from_table():
     """
-    Retrive data from sql table
+    Retrieve data from sql table
     You can show data of download excel file
-    :return:
     """
 
     # Standard years for between in SQL
@@ -111,7 +116,9 @@ def get_data_from_table():
 @app.route('/data/little_math', methods=['POST', 'GET'])
 @check_role(['administrator'])
 def little_math():
-
+    """
+    Import data from Excel, make calculations and return an Excel
+    """
     if request.method == 'POST':
         # check if the post request has the file part
         if not check_filetype(request.files['excel_to_upload'].filename):

@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}
-    Dashboard
+    Работа с данными из базы данных
 {% endblock %}
 {% block content %}
 {% from '_formhelpers.html' import render_field %}
-<p><a href="{{ url_for('list_users') }}">Список пользователей</a></p>
+<div class="easy_to_read">
+    <h1>Работа с данными из базы данных</h1>
+    <p>Простой пример загрузки данных из Excel, просмотра данных и выгрузки их в файл</p>
+    <ol>
+        <li>
+            <a href="{{ url_for('add_data_from_excel') }}">Загрузить данные в таблицу</a>
+        </li>
+        <li>
+            <a href="{{ url_for('get_data_from_table') }}">Просмотреть загруженные данные и выгрузить их в Excel</a>
+        </li>
+    </ol>
+    <p>Пример CRUD можно посмотреть на примере <a href="{{ url_for('dashboard') }}">администрирования пользователей</a></p>
+</div>
 {% endblock %}

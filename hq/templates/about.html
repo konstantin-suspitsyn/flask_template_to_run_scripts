@@ -1,7 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}
-    Об оркстраторе Аргус
+    О шаблоне
 {% endblock %}
 {% block content %}
-<h1>Hello, World!</h1>
+<div class="easy_to_read">
+    <h1 class="pb-1">Зачем этот шаблон</h1>
+    <p>Он задумывался как быстрый старт для запуска простеньких скриптов и запросов для пользователей</p>
+
+    <h2 class="pb-2 pt-3">Запуск преднаписанных sql скриптов</h2>
+    <p class="bg_sql bg_point">Простой шаблон для запуска sql скриптов пользователями, с выгрузкой в Excel и возможностью выставления собственных фильтов</p>
+
+    <h2  class="pb-2 pt-3">Запуск преднаписанных python-скриптов для пользователей</h2>
+    <p class="bg_py bg_point">Простой шаблон для запуска python-скриптов для пользователей. Можно передавать переменные, не нужно следить за тем, чтобы у всех были одинаковые версии файлов</p>
+
+    <h2  class="pb-2 pt-3">Возможность разграничить пользователей по ролям</h2>
+    <p  class="bg_role bg_point">Нужно дать определенным пользователям доступ только к определенным данным — пожалуйста</p>
+
+    <p>Создано <a href="mailto:konstantin.suspitsyn@gmail.com">konstantin.suspitsyn@gmail.com</a></p>
+    <p><a href="https://github.com/konstantin-suspitsyn/flask_template_to_run_scripts">Проект на github</a></p>
+
+    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+</div>
 {% endblock %}

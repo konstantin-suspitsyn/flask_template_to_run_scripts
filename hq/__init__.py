@@ -14,9 +14,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(MYSQL_USER,
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Items per page for pagination
-app.config['PAGINATION_ITEMS'] = 5
-
-# Items per page for pagination
 app.config['ALLOWED_EXTENSIONS'] = ('xlsx',)
 app.config['UPLOAD_FOLDER'] = r'hq\static\tmp_files'
 

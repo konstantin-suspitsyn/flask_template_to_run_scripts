@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}
-    Dashboard
+    Список пользователей
 {% endblock %}
 {% block content %}
 {% from '_formhelpers.html' import render_field %}
+<h1>Список пользователей</h1>
 <form action="" method="POST">
+
     <div class="mb-3">
         <p>Поиск по имени пользователя</p>
         <input type="text" name="username" class="form-control", id="usernameInput" value="{{request.form.username}}">
     </div>
-  <div>
-        <button type="submit" class="btn btn-primary mb-3">Найти</button>
-  </div>
-    <div>
+  <div class="btn-group mb-3">
+        <button type="submit" class="btn btn-dark mb-3">Найти</button>
         <a href="{{ url_for('list_users') }}" class="btn btn-primary mb-3">Очистить поиск</a>
     </div>
 </form>
@@ -71,13 +71,13 @@
                         {{ c_user.name }}
                     </th>
                     <th>
-                        <a href="{{ url_for('change_user_data', id_no=c_user.id) }}" class="btn btn-danger">Изменить</a>
+                        <a href="{{ url_for('change_user_data', id_no=c_user.id) }}" class="btn btn-warning">Изменить</a>
                     </th>
                     <th>
                         <a href="{{ url_for('user_delete', id_no=c_user.id) }}" class="btn btn-danger">X</a>
                     </th>
                     <th>
-                        <a href="{{ url_for('password_reset', id_no=c_user.id) }}" class="btn btn-danger">Сбросить пароль</a>
+                        <a href="{{ url_for('password_reset', id_no=c_user.id) }}" class="btn btn-warning">Сбросить пароль</a>
                     </th>
                 </tr>
             {% endfor %}

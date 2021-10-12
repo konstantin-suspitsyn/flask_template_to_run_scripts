@@ -12,7 +12,6 @@ from hq.helpers import is_not_logged_in, is_logged_in, check_role
 def login():
     """
     Login form
-    :return:
     """
     error_message = "Логин не существует или пароль некорректный"
 
@@ -51,6 +50,9 @@ def login():
 @app.route('/register', methods=['POST', 'GET'])
 @is_not_logged_in
 def register():
+    """
+    Register new user
+    """
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         # Base role of logged in user
@@ -79,6 +81,9 @@ def register():
 @app.route('/logout', methods=['POST', 'GET'])
 @is_logged_in
 def logout():
+    """
+    Logout user
+    """
     session.clear()
     flash('До новых встреч!', 'success')
     return redirect(url_for('index'))
@@ -87,6 +92,10 @@ def logout():
 @app.route('/personal_settings', methods=['POST', 'GET'])
 @is_logged_in
 def personal_settings(id_no=None):
+    """
+    Change personal settings
+    :param id_no: user id
+    """
     if id_no is None:
         user = User.query.filter_by(username=session['username']).first()
     else:
@@ -123,6 +132,9 @@ def personal_settings(id_no=None):
 @app.route('/personal_settings/change_password', methods=['POST', 'GET'])
 @is_logged_in
 def change_password():
+    """
+    Self-password change
+    """
     password_change = PasswordChangeForm(request.form)
 
     user = User.query.filter_by(username=session['username']).first()
@@ -146,12 +158,18 @@ def change_password():
 @app.route('/dashboard')
 @check_role(['administrator'])
 def dashboard():
+    """
+    User management
+    """
     return render_template('user_management/dashboard.html')
 
 
 @app.route('/dashboard/roles', methods=['POST', 'GET'])
 @check_role(['administrator'])
 def roles():
+    """
+    Roles management
+    """
     roles_list = Role.query.all()
     role_form = RoleForm(request.form)
 
@@ -221,6 +239,9 @@ def role_delete(id_no):
 @app.route('/dashboard/users', methods=['GET', 'POST'])
 @check_role(['administrator'])
 def list_users():
+    """
+    Show all users
+    """
     # List all users with pagination and search
     if request.method == 'POST':
         # Getting data from form
@@ -268,8 +289,8 @@ def user_delete(id_no):
 @check_role(['administrator'])
 def password_reset(id_no):
     """
-
-    :param id_no:
+    Reset password for user
+    :param id_no: User id
     """
     pass_form = PasswordResetForm(request.form)
     current_user = User.query.filter_by(id=id_no).first()
@@ -287,8 +308,7 @@ def password_reset(id_no):
 @check_role(['administrator'])
 def change_user_data(id_no):
     """
-
-    :param id_no:
-    :return:
+    Change user data
+    :param id_no: User id
     """
     return personal_settings(id_no)

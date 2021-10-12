@@ -1,3 +1,20 @@
 .no-label label {
-display: none;
+    display: none;
+}
+.easy_to_read {
+    max-width: 760px;
+}
+.bg_point {
+    padding-left: 50px;
+    background-repeat: no-repeat;
+    background-position: top 10px left 0px;
+}
+.bg_sql {
+    background-image: url(../images/sql-file-format-symbol.png);
+}
+.bg_py {
+    background-image: url(../images/python.png);
+}
+.bg_role {
+    background-image: url(../images/role-playing.png);
 }

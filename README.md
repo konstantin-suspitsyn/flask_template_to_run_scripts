@@ -8,13 +8,10 @@ Html pages are based on bootstrap v5.1.1
 
 Based on MySQL
 
-To do:
-1. Admin page to administrate users
-2. Change data in database via uploading xlsx files
-3. Run scripts with progress-bar shown to user
-
 Done:
 1. User role-based auth
+2. Simple UI to run scripts with data from form
+3. Upload data from Excel, view data on page, download data via Excel
 
 
 ## Steps to do
