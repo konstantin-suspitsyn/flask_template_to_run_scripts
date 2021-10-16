@@ -29,7 +29,6 @@ Done:
         Run script db_setup.py. It will create first admin user
     </li>
 </ol>
-To change items per page in pagination change PAGINATION_ITEMS parameter in hq/__init__.py
 
 ## Important
 Temporary files stored in hq/static/tmp_files/**<br>
